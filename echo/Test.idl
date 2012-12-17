@@ -1,0 +1,17 @@
+/// Put the interfaces in a module, 
+/// to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface Echo
+  {
+    /// Return an echo of the input string
+    string echo_string (in string input);
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};
+
