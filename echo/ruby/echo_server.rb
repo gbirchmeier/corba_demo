@@ -1,5 +1,5 @@
 require 'corba/poa'
-CORBA.implement('Test.idl', {}, CORBA::IDL::SERVANT_INTF)
+CORBA.implement('../Test.idl', {}, CORBA::IDL::SERVANT_INTF)
 
 ## CORBA.implement(idlfile, options = {}, genbits)
 #    in string idlfile 
@@ -57,4 +57,6 @@ open('server.ior', 'w') { |io|
 
 # run the ORB request handling loop
 orb.run
+
+puts "Waiting for client request"
 

@@ -1,5 +1,5 @@
 require 'corba'
-CORBA.implement('Test.idl')
+CORBA.implement('../Test.idl')
 
 orb = CORBA.ORB_init('myORB')
 
