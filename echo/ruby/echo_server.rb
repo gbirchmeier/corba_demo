@@ -1,5 +1,5 @@
 require 'corba/poa'
-CORBA.implement('../Test.idl', {}, CORBA::IDL::SERVANT_INTF)
+CORBA.implement('../echo.idl', {}, CORBA::IDL::SERVANT_INTF)
 
 ## CORBA.implement(idlfile, options = {}, genbits)
 #    in string idlfile 
@@ -18,14 +18,16 @@ CORBA.implement('../Test.idl', {}, CORBA::IDL::SERVANT_INTF)
 #          (implies generating client stubs)
 
 
-class EchoServant < POA::Test::Echo
+class EchoServant < POA::EchoDemo::Echo
   def initialize(orb)
     @orb = orb
   end
   def echo_string(input)
+    puts "received '#{input}'"
     "ECHO: #{input}"
   end
   def shutdown()
+    puts "shutdown received"
     @orb.shutdown
   end
 end
@@ -55,8 +57,9 @@ open('server.ior', 'w') { |io|
   io.write echo_ior
 }
 
+puts "Waiting for client request"
+
 # run the ORB request handling loop
 orb.run
 
-puts "Waiting for client request"
-
+puts "terminated."

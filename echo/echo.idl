@@ -1,6 +1,6 @@
 /// Put the interfaces in a module, 
 /// to avoid global namespace pollution
-module Test
+module EchoDemo
 {
   /// A very simple interface
   interface Echo
