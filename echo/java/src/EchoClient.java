@@ -7,8 +7,6 @@ import java.util.*;
 
 public class EchoClient
 {
-	static Echo echoImpl;
-
 	public static void main(String args[])
 	{
 		if(args.length != 1)
@@ -33,11 +31,12 @@ public class EchoClient
 			String ior = new Scanner(iorFile).useDelimiter("\\A").next();
 			org.omg.CORBA.Object objRef = orb.string_to_object(ior);
 
-			echoImpl = EchoHelper.narrow(objRef);
+			Echo echoImpl = EchoHelper.narrow(objRef);
 
-			System.out.println("Obtained a handle on server object: " + echoImpl);
-			System.out.println(echoImpl.echo_string("hello from java client"));
-			echoImpl.shutdown();
+			userLoop(echoImpl);
+
+			orb.destroy();
+			System.out.println("terminated.");
 		}
 		catch (org.omg.CORBA.COMM_FAILURE e)
 		{
@@ -52,6 +51,40 @@ public class EchoClient
 			System.out.println("Unknown exception.");
 			e.printStackTrace(System.out);
 		}
+	}
+
+
+	private static void userLoop(Echo echo)
+	{
+		System.out.println("Echo client.");
+		System.out.println("Enter a string to echo.");
+		System.out.println("Enter 'quit' to quit client.");
+		System.out.println("Enter 'shutdown' to terminate server then quit client.");
+		
+		Scanner scanIn = new Scanner(System.in);
+
+		while(true)
+		{
+			System.out.print("> ");
+			String s = scanIn.nextLine().trim();
+
+			if(s.equals("shutdown"))
+			{
+				echo.shutdown();
+				break;
+			}
+			else if(s.equals("quit"))
+			{
+				break;
+			}
+			else
+			{
+				String output = echo.echo_string(s);
+				System.out.println("server returned: '"+output+"'");
+			}
+		}
+
+		scanIn.close();
 	}
 }
 

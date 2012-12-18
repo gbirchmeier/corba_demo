@@ -9,7 +9,7 @@ echo_obj = EchoDemo::Echo._narrow(obj)
 puts "Echo client."
 puts "Enter a string to echo."
 puts "Enter 'quit' to quit client."
-puts "Enter 'shutdown' to terminate server and exit."
+puts "Enter 'shutdown' to terminate server then quit client."
 
 loop do
   print "> "
